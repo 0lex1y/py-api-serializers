@@ -22,7 +22,7 @@ class ActorSerializer(serializers.ModelSerializer):
         model = Actor
         fields = ("id", "first_name", "last_name", "full_name")
 
-    def get_full_name(self, obj):
+    def get_full_name(self, obj: Actor) -> str:
         return f"{obj.first_name} {obj.last_name}"
 
 
@@ -33,8 +33,8 @@ class CinemaHallSerializer(serializers.ModelSerializer):
         model = CinemaHall
         fields = ("id", "name", "rows", "seats_in_row", "capacity")
 
-    def get_capacity(self, obj):
-        return obj.capacity
+    def get_capacity(self, obj: CinemaHall) -> int:
+        return obj.rows * obj.seats_in_row
 
 
 class MovieSerializer(serializers.ModelSerializer):
@@ -90,7 +90,7 @@ class MovieSessionListSerializer(serializers.ModelSerializer):
 
 
 class MovieSessionRetrieveSerializer(serializers.ModelSerializer):
-    movie = MovieListSerializer()
+    movie = MovieRetrieveSerializer()
     cinema_hall = CinemaHallSerializer()
 
     class Meta:
